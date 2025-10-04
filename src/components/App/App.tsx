@@ -49,7 +49,7 @@ function App() {
         error?.message ? error.message : 'There was an error fetching movies'
       );
     }
-  }, [isError]);
+  }, [isError, error]);
 
   return (
     <div className={styles.app}>
