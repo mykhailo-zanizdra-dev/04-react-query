@@ -51,6 +51,8 @@ function App() {
     }
   }, [isError, error]);
 
+  const isLoaderShown = isFetching && !!searchQuery;
+
   return (
     <div className={styles.app}>
       <Toaster position="top-center" reverseOrder={false} />
@@ -59,16 +61,18 @@ function App() {
         <MovieGrid
           movies={movies}
           onSelect={handleSelectMovie}
-          isLoading={isFetching}
+          isLoading={isLoaderShown}
         />
       )}
-      {isFetching && <Loader />}
-      {isError && <ErrorMessage />}
-      <Pagination
-        page={currentPage}
-        totalPages={totalPages}
-        setPage={setCurrentPage}
-      />
+      {isLoaderShown && <Loader />}
+      {isError && !!searchQuery && <ErrorMessage />}
+      {totalPages > 1 && isSuccess && (
+        <Pagination
+          page={currentPage}
+          totalPages={totalPages}
+          setPage={setCurrentPage}
+        />
+      )}
       {selectedMovie && (
         <MovieModal
           movie={selectedMovie}
